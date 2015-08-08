@@ -1,0 +1,14 @@
+
+
+import sys
+test_cases = open(sys.argv[1], 'r')
+for test in test_cases:
+	number = int(test.strip())
+	total = number / 5
+	remain = number % 5
+	total += remain / 3
+	remain = remain % 3
+	total += remain
+	print total
+	
+test_cases.close()
