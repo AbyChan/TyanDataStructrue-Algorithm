@@ -1,0 +1,26 @@
+import sys
+test_cases = open(sys.argv[1], 'r')
+from itertools import groupby
+rotations = {
+  'LEFT': 0,
+  'DOWN': 1,
+  'RIGHT': 2,
+  'UP': 3
+}
+
+for test in test_cases:
+  direction, length, grid = [part.strip() for part in test.split(';')]
+  grid = [[int(i) for i in line.split()] for line in grid.split('|')]
+  
+  for i in range(rotations[direction]):
+    #The single star * unpacks the sequence/collection into positional arguments
+    grid = list(zip(*grid[::-1]))
+  grid = [sorted(i, key=lambda x: x == 0) for i in grid]
+  grid = [[sum(j[1]) for j in groupby(i)] for i in grid]
+  grid = [i + [0] * (int(length)-len(i)) for i in grid]
+  # rotate grid back to initial position
+  for i in range(4 - rotations[direction]):
+    grid = list(zip(*grid[::-1]))
+  print('|'.join(' '.join(map(str, i)) for i in grid))
+
+test_cases.close()
